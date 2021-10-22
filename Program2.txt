@@ -1,0 +1,78 @@
+PROGRAM Programa2 : 
+	DIM tamano of word ; 
+	DIM vector of matrix size [ 10 ] ; 
+	DIM i , myFlag , temporal, temporalTam of word ;
+	DIM mayor of word ;
+	DIM temporal1, temporal2 of word ;
+	
+
+	SUB PROCEDURE LEE :
+	BEGIN
+		LET myFlag := 0 ;
+		
+		DO 
+			OUTPUT "Tamano Vector" ;
+			INPUT tamano ;
+			
+			IF ( ( tamano <= 10 ) AND ( tamano > 0 ) ) THEN
+				LET myFlag := 1 ;
+			ELSE
+				OUTPUT "El valor debe ser maximo 10 y mayor de 0";
+				LET myFlag := 0 ;
+			ENDIF ;
+		LOOP ( myFlag = 0 ) ;
+		
+		FOR ( LET i := 0 ; i < tamano ; LET i := i + 1 )
+			OUTPUT "Posicion :" ;
+			OUTPUT i ;
+			INPUT temporal ;
+			LET vector[i] := temporal ;
+		NEXT ;
+		
+	RETURN ;
+	
+	
+	SUB PROCEDURE ORDENA :
+	BEGIN
+		LET temporalTam := tamano - 1;
+		WHILE ( temporalTam > 0 )
+			FOR ( LET i := 0 ; i < temporalTam ; LET i := i + 1 )
+				LET temporal1 := vector[i] ;
+				LET temporal2 := vector[i + 1] ;
+				IF ( temporal1 > temporal2 ) THEN 
+					LET mayor := temporal1 ;
+					LET temporal := temporal2 ;
+					LET vector[i] := temporal ;
+					LET vector[i+1] := mayor ;
+				ENDIF ;
+			NEXT ;
+			
+			LET temporalTam := temporalTam - 1 ;
+		WEND ;
+
+		
+	RETURN ;
+	
+	SUB PROCEDURE IMPRIME :
+	BEGIN
+	
+		OUTPUT "Vector :" ;
+		FOR ( LET i := 0 ; i < tamano ; LET i := i + 1 )
+			LET temporal := vector[i] ;
+			OUTPUT temporal ;
+		NEXT ;
+		
+	RETURN ;
+	
+	BEGIN 
+		
+		DO 
+			GOSUB LEE ;
+			GOSUB ORDENA ;
+			GOSUB IMPRIME ;
+			
+			OUTPUT "Quieres ordenar otro vector (S = 1 /N = 0)" ;
+			INPUT myFlag ;
+		LOOP (myFlag = 1 ) ;
+		
+	END

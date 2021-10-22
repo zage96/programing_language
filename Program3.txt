@@ -1,0 +1,88 @@
+PROGRAM Programa3 : 
+	DIM X, Y of double ;
+	DIM myFlag, opcion of word ;
+	DIM temporal, num, denom , temporal2 of double ;
+	DIM i of word ;
+	
+	SUB PROCEDURE FACTORIAL :
+	BEGIN
+
+		IF ( X > 0 ) THEN
+		
+			LET temporal := temporal * X ;
+			LET X := X - 1 ;
+			GOSUB FACTORIAL ;
+		ENDIF ;
+
+		
+	RETURN ;
+	
+	SUB PROCEDURE POTENCIA :
+	BEGIN
+		OUTPUT "POTENCIA" ;
+		OUTPUT "X : " ;
+		INPUT X ;
+		OUTPUT "Y : " ;
+		INPUT Y ;
+		LET temporal := X ^ Y ;
+		OUTPUT "Resultado : ";
+		OUTPUT temporal ;
+	RETURN ;
+	
+	SUB PROCEDURE TAYLOR :
+	BEGIN
+		OUTPUT "TAYLOR" ;
+		OUTPUT "X : " ;
+		INPUT X ;
+		LET temporal := 0 ;
+		FOR (LET Y := 0 ; Y <= 10 ; LET Y := Y + 1 )
+			LET num := X ^ Y ;
+			LET denom := 1 ;
+			FOR ( LET i := 1 ; i <= Y ; LET i := i + 1 )
+				LET denom := denom * i ;
+			NEXT ;
+			LET temporal := temporal + ( num / denom );
+		NEXT ;
+		OUTPUT "Resultado : ";
+		OUTPUT temporal ;
+	RETURN ;
+	
+	BEGIN 
+		LET myFlag := 0 ;
+		
+		DO
+			OUTPUT "Que quiere hacer" ;
+			OUTPUT "Factorial (1)";
+			OUTPUT "Potencia (2)";
+			OUTPUT "Taylor (3)";
+			DO 
+				INPUT opcion ;
+			LOOP ( (opcion < 1)  OR (opcion > 3) ) ;
+			
+			IF ( opcion = 1 )THEN
+				OUTPUT "FACTORIAL" ;
+				OUTPUT "X : " ;
+				INPUT X ;
+				LET temporal := 1 ;
+				GOSUB FACTORIAL ;
+								
+				OUTPUT "Resultado : ";
+				OUTPUT temporal ;
+			ENDIF ;
+			
+			IF ( opcion = 2 )THEN
+				GOSUB POTENCIA ;
+			ENDIF ;
+			
+			IF ( opcion = 3 )THEN
+				GOSUB TAYLOR ;
+			ENDIF ;
+			
+			
+			OUTPUT "Quiere hacer otro procedimiento (S = 1/ N = 0) " ;
+			DO 
+				INPUT myFlag ;
+			LOOP ( (myFlag < 0)  OR (myFlag > 1) ) ;
+			
+		LOOP ( myFlag = 1 ) ;
+	END

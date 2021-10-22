@@ -1,0 +1,28 @@
+PROGRAM PrimerPrograma : 
+	DIM a of word ; 
+	DIM var1 of matrix size [ 5 , 5 ] ; 
+	DIM b, c of double; 
+
+	SUB PROCEDURE PRIMERPROGRAMA :
+	BEGIN
+		LET a := 1 ;
+	RETURN ;
+
+	SUB PROCEDURE SEGUNDOPROGRAMA :
+	BEGIN
+		LET a := a + a ;
+	RETURN ;
+
+	BEGIN 
+		GOSUB PRIMERPROGRAMA ;
+		GOSUB SEGUNDOPROGRAMA;
+		# como estas / 34 + - := TEST_TEST #
+		OUTPUT " Como estas " ;
+		OUTPUT "Bien bien" ;
+		LET c := -0.5 ;
+		INPUT a , c ;
+		LET b := 1 * 1.5 ; 
+		LET var1[b ,b] := b ; 
+
+		OUTPUT a , b ;
+	END

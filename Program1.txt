@@ -1,0 +1,169 @@
+PROGRAM Programa1 : 
+	DIM x1, y1, x2 , y2, x3 , y3 of word ; 
+	DIM mat1 , mat2 , mat3 of matrix size [ 5 , 5 ] ; 
+	DIM operando1, operando2, operando3 of double; 
+	DIM myFlag of word ;
+	DIM operacion of word ;
+	DIM i , j, k of word ;
+	DIM temporal, multi of word ;
+	
+	SUB PROCEDURE DIMENSIONES :
+	BEGIN
+		LET myFlag := 0 ;
+		
+		WHILE ( myFlag = 0 )
+			OUTPUT "Tamano primera matriz - renglones:" ;
+			INPUT y1 ;
+			OUTPUT "Tamano primera matriz - columnas:" ;
+			INPUT x1 ;
+			OUTPUT "Tamano Segunda matriz - renglones:" ;
+			INPUT y2 ;
+			OUTPUT "Tamano Segunda matriz - columnas:" ;
+			INPUT x2 ;
+			
+			IF ( ( x1 < 6 ) AND ( y1 < 6 ) AND ( x2 < 6 ) AND ( y2 < 6 ) ) THEN
+				IF ( ( x1 > 0 ) AND ( y1 > 0 ) AND ( x2 > 0 )  AND ( y2 > 0 ) ) THEN
+					LET myFlag := 1 ;
+				ELSE
+					LET myFlag := 0 ;
+					OUTPUT "Uno de los valores es menor o igual a 0" ;
+				ENDIF ;
+			ELSE
+				LET myFlag := 0 ;
+				OUTPUT "Uno de los valores es mayor a 5" ;
+			ENDIF ;
+		
+		WEND ;
+		
+		LET i := 0 ;
+		LET j := 0 ;
+		
+		FOR ( LET i := 0 ; i < y1 ; LET i := i + 1 )
+			FOR ( LET j := 0 ; j < x1 ; LET j := j + 1 )
+				OUTPUT "Escribe valor de celda MAtriz1" ;
+				OUTPUT i , j ;
+				INPUT temporal ;
+				LET mat1[i,j] := temporal ;
+			NEXT ;
+		NEXT ;
+		
+		FOR ( LET i := 0 ; i < y2 ; LET i := i + 1 )
+			FOR ( LET j := 0 ; j < x2 ; LET j := j + 1 )
+				OUTPUT "Escribe valor de celda Matriz2" ;
+				OUTPUT i , j ;
+				INPUT temporal ;
+				LET mat2[i,j] := temporal ;
+			NEXT ;
+		NEXT ;
+		
+	RETURN ;
+
+	SUB PROCEDURE PreguntaOperacion :
+	BEGIN
+		LET myFlag := 0 ;
+		
+		WHILE ( myFlag = 0 )
+			OUTPUT "Que quieres hacer  Sumar  0 o Multiplicar 1" ;
+			INPUT operacion ;
+			
+			IF ( ( operacion = 1 ) OR ( operacion = 0 ) ) THEN
+				LET myFlag := 1 ;
+			ELSE
+				LET myFlag := 0 ;
+				OUTPUT "Elige una opcion valida" ;
+			ENDIF ;
+		
+		WEND ;
+		
+	RETURN ;
+
+	SUB PROCEDURE SUMA :
+	BEGIN
+		OUTPUT " suma " ;
+		IF ( ( x1 = x2 ) AND ( y1 = y2 ) ) THEN
+			OUTPUT " Si se puede sumar " ;
+			
+			LET x3 := x1 ;
+			LET y3 := y1 ;
+			
+			FOR ( LET i := 0 ; i < y2 ; LET i := i + 1 )
+				FOR ( LET j := 0 ; j < x2 ; LET j := j + 1 )
+					LET mat3[i,j] := mat1[i,j] + mat2[i,j] ;
+				NEXT ;
+			NEXT ;
+			
+			
+		ELSE
+			OUTPUT " esas dimensiones no se pueden sumar " ;
+		ENDIF ;
+		
+	RETURN ;
+	
+	SUB PROCEDURE MULTIPLICACION :
+	BEGIN
+		OUTPUT " MULTIPLICACION " ;
+		
+		IF ( x1 = y2 ) THEN
+			OUTPUT " Si se puede multiplicar " ;
+			LET y3 := y1 ;
+			LET x3 := x2 ;
+			
+			FOR ( LET i := 0 ; i < y3 ; LET i := i + 1 )
+				FOR ( LET j := 0 ; j < x3 ; LET j := j + 1 )
+					LET temporal := 0 ;
+					FOR ( LET k := 0 ; k < x1 ; LET k := k + 1 )
+						LET multi := mat1[i,k] * mat2[k,j] ;
+						LET temporal := temporal + multi ;
+					NEXT ;
+					LET mat3[i,j]:= temporal ;
+					
+				NEXT ;
+			NEXT ;
+			
+			
+		ELSE
+			OUTPUT " esas dimensiones no se pueden multiplicar " ;
+		ENDIF ;
+		
+	RETURN ;
+	
+	SUB PROCEDURE Muestra :
+	BEGIN
+				
+		OUTPUT "Matriz 3 :" ;
+		FOR ( LET i := 0 ; i < y3 ; LET i := i + 1 )
+			FOR ( LET j := 0 ; j < x3 ; LET j := j + 1 )
+				LET temporal := mat3[i,j] ;
+
+				OUTPUT " Renglon : " ;
+				OUTPUT i ;
+				OUTPUT " Fila : " ;
+				OUTPUT j ;
+				OUTPUT temporal ;
+				OUTPUT " ##### " ;
+			NEXT ;
+		NEXT ;
+		
+	RETURN ;
+	
+	BEGIN 
+		LET operando1 := 0 ;
+		LET operando2 := 0 ;
+		LET operando3 := 0 ;
+		GOSUB DIMENSIONES ;
+		GOSUB PreguntaOperacion ;
+		
+		IF ( operacion = 0 ) THEN
+			GOSUB SUMA ;
+			GOSUB Muestra ;
+		ELSE
+			GOSUB MULTIPLICACION ;
+			GOSUB Muestra ;
+		ENDIF ;
+		
+		
+		LET operando1 := 1.5 ;
+		LET operando2 := 1.5 ;
+		LET mat3[operando1,operando2] := 19 ;
+
+	END

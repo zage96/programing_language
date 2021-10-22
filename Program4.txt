@@ -1,0 +1,65 @@
+PROGRAM Programa4 : 
+	DIM actual, anterior, temporal of double ;
+	DIM myFlag, perdida, iteraciones of word ;
+	DIM i of word ;
+	
+	SUB PROCEDURE FIBONACCI :
+	BEGIN
+		OUTPUT "FIBONACCI" ;
+		
+		LET actual := 1 ;
+		LET anterior := 0 ;
+		
+		OUTPUT anterior;
+		FOR ( LET i := 1 ; i < iteraciones ; LET i := i + 1 )
+			OUTPUT actual;
+			LET temporal := actual + anterior ;
+			LET anterior := actual ;
+			LET actual := temporal ;
+		NEXT ;
+		
+		IF (perdida = 1) THEN
+			OUTPUT actual;
+			IF (iteraciones > 1) THEN
+				OUTPUT anterior;
+			ENDIF ;
+			
+			FOR ( LET i := 1 ; i < iteraciones ; LET i := i + 1 )
+				
+				LET temporal := actual - anterior;
+				OUTPUT temporal;
+				LET actual := anterior ;
+				LET anterior := temporal ;
+				
+			NEXT ;
+		ENDIF ;
+		
+		
+	RETURN ;
+	
+	
+	BEGIN 
+		OUTPUT "Bienvenido a mi programa 4";
+		OUTPUT "Este Programa hace la secuencia de fibonacci";
+		OUTPUT "Puede hacer serie con o sin perdida";
+		
+		LET myFlag := 0 ;
+		
+		DO 
+			
+			OUTPUT "Quieres perdida en tu serie ? (S = 1 / N = 0)";
+			DO 
+				INPUT perdida ;
+			LOOP ( (perdida < 0)  OR (perdida > 1) ) ;
+			
+			OUTPUT "Cuantas iteraciones quieres ?";
+			INPUT iteraciones ;
+			
+			GOSUB FIBONACCI ;
+			
+			OUTPUT "Quieres hacer otra secuencia ? (S = 1 / N = 0)";
+			DO 
+				INPUT myFlag ;
+			LOOP ( (myFlag < 0)  OR (myFlag > 1) ) ;
+		LOOP ( myFlag = 1 ) ;
+	END
